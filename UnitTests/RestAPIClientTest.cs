@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClassLibrary1;
 using ClassLibrary1.Class;
+using ClassLibrary1.Class.APIClass;
 using ClassLibrary1.Class.PlainObject;
 using static System.Console;
 
@@ -14,7 +15,8 @@ namespace UnitTests
     {
         private String wrongUserName = "DFEREER#$cklfdadsfklsdfjlskdjflsdkjflsdfkj";
 
-        static APIClass apiClass;
+        private static SecurePassClient securePassClient;
+        static UsersAPIClass _usersApiClass;
         static UserData testUserData;
 
 
@@ -46,7 +48,8 @@ namespace UnitTests
         [ClassInitialize()]
         public static void InitializeTestClass(TestContext context)
         {
-            apiClass = new APIClass(SecurePassTestAuth.SecurePassAppID, SecurePassTestAuth.SecurePassAppSecret, SecurePassTestAuth.SecurePassUsername, SecurePassTestAuth.SecurePassSecret);
+            _usersApiClass = new UsersAPIClass();
+            securePassClient = new SecurePassClient(SecurePassTestAuth.SecurePassAppID, SecurePassTestAuth.SecurePassAppSecret, SecurePassTestAuth.SecurePassUsername, SecurePassTestAuth.SecurePassSecret);
             testUserData = CreateTestUserObject();
         }
 
@@ -66,7 +69,7 @@ namespace UnitTests
         private void DeleteTestUserFromRealm()
         {
             UserName userName = GetTestUserName();
-            JSONBaseDataResponse response = apiClass.deleteUSer(userName);
+            JSONBaseDataResponse response = _usersApiClass.deleteUSer(userName);
         }
 
 
@@ -74,7 +77,7 @@ namespace UnitTests
         private UserNameResponse AddTestUserToRealm()
         {
             var userAdd = CreateTestUserObject();
-            UserNameResponse userName = apiClass.addUser(userAdd);
+            UserNameResponse userName = _usersApiClass.addUser(userAdd);
             return userName;
         }
 
@@ -83,7 +86,7 @@ namespace UnitTests
         {
             UserName testUsername = new UserName();
             testUsername.USERNAME = GetTestUserName().USERNAME;
-            var result = apiClass.GetUserInfo(testUsername);
+            var result = _usersApiClass.GetUserInfo(testUsername);
             return result;
         }
 
@@ -99,7 +102,7 @@ namespace UnitTests
         public void TestGetUserList()
         {
             AddTestUserToRealm();
-            UserList result = apiClass.GetUserList();
+            UserList result = _usersApiClass.GetUserList();
 
             Assert.IsTrue(result.Username.Count > 0);
             Assert.IsTrue(result.Username.Contains(GetTestUserName().USERNAME));
@@ -123,7 +126,7 @@ namespace UnitTests
             AddTestUserToRealm();
 
             UserName userName = GetTestUserName();
-            JSONBaseDataResponse response = apiClass.deleteUSer(userName);
+            JSONBaseDataResponse response = _usersApiClass.deleteUSer(userName);
 
             Assert.IsTrue(response.rc == "0");
         }
@@ -135,7 +138,7 @@ namespace UnitTests
             AddTestUserToRealm();
 
             UserName userName = GetTestUserName();
-            JSONBaseDataResponse response = apiClass.enableUSer(userName);
+            JSONBaseDataResponse response = _usersApiClass.enableUSer(userName);
 
             Assert.IsTrue(response.rc == "0");
             var testUserInfo = GetTestUserInfoForTestUser();
@@ -151,7 +154,7 @@ namespace UnitTests
 
             UserName userName = GetTestUserName();
 
-            JSONBaseDataResponse response = apiClass.disableUSer(userName);
+            JSONBaseDataResponse response = _usersApiClass.disableUSer(userName);
             Assert.IsTrue(response.rc == "0");
 
             var testUserInfo = GetTestUserInfoForTestUser();
@@ -166,7 +169,7 @@ namespace UnitTests
 
             UserName userName = GetTestUserName();
 
-            JSONBaseDataResponse response = apiClass.UserPasswordDisable(userName);
+            JSONBaseDataResponse response = _usersApiClass.UserPasswordDisable(userName);
             Assert.IsTrue(response.rc == "0");
 
         }
@@ -182,7 +185,7 @@ namespace UnitTests
             userPasswordChange.USERNAME = userName.USERNAME + "WWW";
             userPasswordChange.PASSWORD = "ERT$%%^$%";
 
-            JSONBaseDataResponse response = apiClass.UserPasswordChange(userPasswordChange);
+            JSONBaseDataResponse response = _usersApiClass.UserPasswordChange(userPasswordChange);
             Assert.IsTrue(response.rc == "0");
 
         }
@@ -198,7 +201,7 @@ namespace UnitTests
             userPasswordChange.USERNAME = userName.USERNAME + "WWW";
             userPasswordChange.PASSWORD = "ERT$%%^$%";
 
-            JSONBaseDataResponse response = apiClass.UserPasswordChange(userPasswordChange);
+            JSONBaseDataResponse response = _usersApiClass.UserPasswordChange(userPasswordChange);
             Assert.IsTrue(response.rc != "0");
 
         }
@@ -213,15 +216,30 @@ namespace UnitTests
 
             var userNameXattrSet = getXAttrTestSet();
 
-            JSONBaseDataResponse responseXattrSet= apiClass.UserXattrSet(userNameXattrSet);
+            JSONBaseDataResponse responseXattrSet= _usersApiClass.UserXattrSet(userNameXattrSet);
             Assert.IsTrue(responseXattrSet.rc == "0");
 
 
-            UserXattrList response = apiClass.UserXattrList(userName);
+            UserXattrList response = _usersApiClass.UserXattrList(userName);
             //Assert.IsTrue(response.rc == "0");
 
         }
 
+        [TestMethod]
+        public void TestAppsAdd()
+        {
+            AppsAddDataRequest request = new AppsAddDataRequest();
+            request.LABEL = "TestAppLAbel1";
+            request.WRITE = "true";
+            request.ALLOWEDNETWORKIPV4 = "";
+            request.ALLOWEDNETWORKIPV6 = "";
+            request.GROUP = null;
+            request.REALM = null;
+
+            AppsAPIClass aPiClass = new AppsAPIClass();
+            AppsAddDataResponse appsAddDataResponse = aPiClass.addApps(request);
+            Assert.IsTrue(appsAddDataResponse.rc == "0");
+        }
 
 
         [TestMethod]
@@ -232,11 +250,11 @@ namespace UnitTests
 
             var userNameXattrSet = getXAttrTestSet();
 
-            JSONBaseDataResponse response = apiClass.UserXattrSet(userNameXattrSet);
+            JSONBaseDataResponse response = _usersApiClass.UserXattrSet(userNameXattrSet);
             Assert.IsTrue(response.rc == "0");
 
             UserName userName = GetTestUserName();
-            UserXattrList userXattrList = apiClass.UserXattrList(userName);
+            UserXattrList userXattrList = _usersApiClass.UserXattrList(userName);
             Assert.IsTrue(userXattrList.rc == "0");
             Assert.IsTrue(userXattrList.values[XattrNameTest] == XattrValueTest);
 

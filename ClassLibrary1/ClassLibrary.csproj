@@ -55,7 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\APIClass.cs" />
+    <Compile Include="Class\APIClass\AppsAPIClass.cs" />
+    <Compile Include="Class\APIClass\SecurePassClient.cs" />
+    <Compile Include="Class\APIClass\UsersAPIClass.cs" />
+    <Compile Include="Class\PlainObject\Apps.cs" />
     <Compile Include="Class\PlainObject\User.cs" />
     <Compile Include="Class\RestSharpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using ClassLibrary1.Class;
 using ClassLibrary1.Class.PlainObject;
 using RestSharp;
 
@@ -39,8 +40,10 @@ namespace ClassLibrary1
             JSONBaseDataRequest postData)
             where T : IJSONBaseDataResponse, new()
         {
+            var fullApiurl = getFullAPIURL(APIurl);
+
             RestRequest request;
-            var client = prepareRequest(APIurl, postData, out request);
+            var client = prepareRequest(fullApiurl, postData, out request);
 
             IRestResponse response1 = client.Execute(request);
             IRestResponse<T> response = client.Execute<T>(request);
@@ -53,11 +56,18 @@ namespace ClassLibrary1
         // Request for response with no predefined type of data contained in
         public String PostRequestWithParameter(string APIurl, JSONBaseDataRequest postData)
         {
+            var fullApiurl = getFullAPIURL(APIurl);
+
             RestRequest request;
-            var client = prepareRequest(APIurl, postData, out request);
+            var client = prepareRequest(fullApiurl, postData, out request);
             IRestResponse response1 = client.Execute(request);
             return response1.Content;
 
+        }
+
+        private static string getFullAPIURL(string APIurl) 
+        {
+            return SecurePassClient.APIVersionPath + APIurl;
         }
 
 
