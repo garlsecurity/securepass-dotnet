@@ -3,28 +3,38 @@ using ClassLibrary1.Class.PlainObject;
 
 namespace ClassLibrary1.Class
 {
-    public class SecurePassClient
+    public class SecurePassRestAPI
     {
         private const String defaultAPIVersionPath = "api/v1/";
-        public static RestSharpClient client = null;
+        private static SecurePassRestClient internalClient = null;
+
+        public static SecurePassRestClient client
+        {
+            get
+            {
+                if (internalClient == null) throw new NullReferenceException("SecurePassRestAPI MUST be initialized before calling RestApi");
+                return internalClient;
+            }
+        }
+
         private string SecurePassURL = " https://beta.secure-pass.net";
         public  static string APIVersionPath { get; set; }
 
-        public SecurePassClient()
+        public SecurePassRestAPI()
         {
         }
 
-        public SecurePassClient(string SecurePassAppIdHeader,
+        public SecurePassRestAPI(string SecurePassAppIdHeader,
             string SecurePassAppSecretHeader,
             string Username,
             string Secret)
         {
-            client = new RestSharpClient(SecurePassAppIdHeader,
+            internalClient = new SecurePassRestClient(SecurePassAppIdHeader,
                 SecurePassAppSecretHeader,
                 Username,
                 Secret, SecurePassURL);
 
-            APIVersionPath = SecurePassClient.defaultAPIVersionPath;
+            APIVersionPath = SecurePassRestAPI.defaultAPIVersionPath;
 
         }
 
@@ -32,7 +42,7 @@ namespace ClassLibrary1.Class
         // This constructor add two values to standard parameter 
         // 1) apiVersionPath standard parameter API version (if null it revert to default  i.e "/api/v1" )
         // 2) Securepass URL (if null it take defaul value i.e. " https://beta.secure-pass.net") 
-        public SecurePassClient(string SecurePassAppIdHeader,
+        public SecurePassRestAPI(string SecurePassAppIdHeader,
             string SecurePassAppSecretHeader,
             string Username,
             string Secret,
@@ -42,7 +52,7 @@ namespace ClassLibrary1.Class
             APIVersionPath = (apiVersionPath != null) ? apiVersionPath : APIVersionPath;
             SecurePassURL = (securePassURL != null) ? securePassURL : SecurePassURL;
 
-            client = new RestSharpClient(SecurePassAppIdHeader,
+            internalClient = new SecurePassRestClient(SecurePassAppIdHeader,
             SecurePassAppSecretHeader,
             Username,
             Secret, SecurePassURL);
@@ -50,16 +60,16 @@ namespace ClassLibrary1.Class
         }
 
 
-        public T getAPIValue<T>(String APIurl) where T : JSONBaseDataResponse, new()
+        public T getAPIValue<T>(String APIurl) where T : IJSONBaseDataResponse, new()
         {
-            var result = SecurePassClient.client.PostRequest<T>(APIurl);
+            var result = SecurePassRestAPI.internalClient.PostRequest<T>(APIurl);
 
             return result;
         }
 
-        public T getAPIValue<T>(String APIurl, JSONBaseDataRequest jsonBaseDataRequest) where T : JSONBaseDataResponse, new()
+        public T getAPIValue<T>(String APIurl, JSONBaseDataRequest jsonBaseDataRequest) where T : IJSONBaseDataResponse, new()
         {
-            var result = SecurePassClient.client.PostRequestWithParameter<T>(APIurl, jsonBaseDataRequest);
+            var result = SecurePassRestAPI.internalClient.PostRequestWithParameter<T>(APIurl, jsonBaseDataRequest);
 
             return result;
         }

@@ -55,12 +55,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\APIClass\AppsAPIClass.cs" />
-    <Compile Include="Class\APIClass\SecurePassClient.cs" />
-    <Compile Include="Class\APIClass\UsersAPIClass.cs" />
+    <Compile Include="Class\APIClass\AppsAPI.cs" />
+    <Compile Include="Class\APIClass\GroupsAPI.cs" />
+    <Compile Include="Class\APIClass\RadiusAPI.cs" />
+    <Compile Include="Class\APIClass\SecurePassRestAPI.cs" />
+    <Compile Include="Class\APIClass\UsersAPI.cs" />
     <Compile Include="Class\PlainObject\Apps.cs" />
+    <Compile Include="Class\PlainObject\BaseRequestResponse.cs" />
+    <Compile Include="Class\PlainObject\Groups.cs" />
+    <Compile Include="Class\PlainObject\Radius.cs" />
     <Compile Include="Class\PlainObject\User.cs" />
-    <Compile Include="Class\RestSharpClient.cs" />
+    <Compile Include="Class\SecurePassRestClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,10 +11,6 @@ namespace ClassLibrary1.Class.PlainObject
     {
     }
 
-    public class JSONBaseDataRequest
-    {
-    }
-
 
     public class UserName : JSONBaseDataRequest
     {
@@ -31,17 +27,6 @@ namespace ClassLibrary1.Class.PlainObject
         public String NIN { get; set; } // Optional
     }
 
-    public interface IJSONBaseDataResponse
-    {
-
-    }
-
-    public class JSONBaseDataResponse : IJSONBaseDataResponse
-    {
-        public string rc { get; set; }
-
-        public string errorMsg { get; set; }
-    }
 
     public class UserNameXattrSet : JSONBaseDataRequest
     {
@@ -80,78 +65,24 @@ namespace ClassLibrary1.Class.PlainObject
 
     public class UserInfo : JSONBaseDataResponse
     {
-        String nin;
-        String name;
-        String mobile;
-        String errorMsg;
-        Boolean enabled;
-        String token;
-        String manager;
-        String surname;
-        String password;
-        String email;
+        public string Nin { get; set; }
 
-        public string Nin
-        {
-            get { return nin; }
-            set { nin = value; }
-        }
+        public string Name { get; set; }
 
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
+        public string Mobile { get; set; }
 
-        public string Mobile
-        {
-            get { return mobile; }
-            set { mobile = value; }
-        }
+        public string ErrorMsg { get; set; }
 
-        public string ErrorMsg
-        {
-            get { return errorMsg; }
-            set { errorMsg = value; }
-        }
+        public bool Enabled { get; set; }
 
-        public bool Enabled
-        {
-            get { return enabled; }
-            set { enabled = value; }
-        }
+        public string Token { get; set; }
 
-        public string Token
-        {
-            get { return token; }
-            set { token = value; }
-        }
+        public string Manager { get; set; }
 
-        public string Manager
-        {
-            get { return manager; }
-            set { manager = value; }
-        }
+        public string Surname { get; set; }
 
-        public string Surname
-        {
-            get { return surname; }
-            set { surname = value; }
-        }
+        public string Password { get; set; }
 
-        public string Password
-        {
-            get { return password; }
-            set { password = value; }
-        }
-
-        public string Email
-        {
-            get { return email; }
-            set { email = value; }
-        }
-
-
-
+        public string Email { get; set; }
     }
 }

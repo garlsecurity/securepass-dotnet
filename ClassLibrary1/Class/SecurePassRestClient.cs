@@ -9,7 +9,7 @@ using RestSharp;
 
 namespace ClassLibrary1
 {
-    public class RestSharpClient
+    public class SecurePassRestClient
     {
         // Header for Request
         private String XSecurePassAppIDHeader = "X-SecurePass-App-ID";
@@ -31,7 +31,7 @@ namespace ClassLibrary1
         private static bool debug = true;
 
 
-        public T PostRequest<T>(string APIurl) where T : JSONBaseDataResponse , new()
+        public T PostRequest<T>(string APIurl) where T : IJSONBaseDataResponse , new()
         {
             return PostRequestWithParameter<T>(APIurl, null);
         }
@@ -45,11 +45,14 @@ namespace ClassLibrary1
             RestRequest request;
             var client = prepareRequest(fullApiurl, postData, out request);
 
-            IRestResponse response1 = client.Execute(request);
+            // To use for debug purpose
+            //var restResponse = client.Execute(request);
+
             IRestResponse<T> response = client.Execute<T>(request);
 
             var postRequestWithJsonRequestBody = response.Data;
-            if (debug) Console.WriteLine("Response" + request.JsonSerializer.Serialize(postRequestWithJsonRequestBody));
+            if (debug) Console.WriteLine("Response" + request.JsonSerializer.Serialize(postRequestWithJsonRequestBody) +
+                 System.Environment.NewLine);
             return postRequestWithJsonRequestBody;
         }
 
@@ -67,7 +70,7 @@ namespace ClassLibrary1
 
         private static string getFullAPIURL(string APIurl) 
         {
-            return SecurePassClient.APIVersionPath + APIurl;
+            return SecurePassRestAPI.APIVersionPath + APIurl;
         }
 
 
@@ -135,7 +138,7 @@ namespace ClassLibrary1
             return list;
         }
 
-        public RestSharpClient(string vXSecurePassAppIdHeader,
+        public SecurePassRestClient(string vXSecurePassAppIdHeader,
             string vXSecurePassAppSecretHeader,
             string vUsernameParameter,
             string vSecretParameter,

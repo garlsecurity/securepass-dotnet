@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace ClassLibrary1.Class
 {
     
-    public class UsersAPIClass
+    public class UsersAPI
     {
 
         public static String userInfoAPIPathAPIURL = "users/info";
@@ -23,68 +23,66 @@ namespace ClassLibrary1.Class
         public String usersPasswordChangeAPIURL = "users/password/change";
         public String usersXattrsListAPIURL = " users/xattrs/list";
         public String usersXattrsSetAPIURL = "users/xattrs/set";
-        private readonly SecurePassClient _securePassClient;
-
-
-
+        private readonly SecurePassRestAPI _securePassRestApi;
 
         public UserInfo GetUserInfo(UserName userName)
         {
-            UserInfo userInfo = SecurePassClient.client.PostRequestWithParameter<UserInfo>(userInfoAPIPathAPIURL , userName);
+            UserInfo userInfo = SecurePassRestAPI.client.PostRequestWithParameter<UserInfo>(userInfoAPIPathAPIURL , userName);
 
             return userInfo;
         }
 
         public UserList GetUserList()
         {
-            UserList userList = SecurePassClient.client.PostRequest<UserList>( userListAPIPathAPIURL);
+            UserList userList = SecurePassRestAPI.client.PostRequest<UserList>( userListAPIPathAPIURL);
 
             return userList;
         }
 
         public UserNameResponse addUser(UserData userData)
         {
-            UserNameResponse userNameResponse = SecurePassClient.client.
+            UserNameResponse userNameResponse = SecurePassRestAPI.client.
                 PostRequestWithParameter<UserNameResponse>( userAddPathAPIURL, userData);
 
             return userNameResponse;
 
         }
 
-        public JSONBaseDataResponse deleteUSer(UserName userName)
+        public IJSONBaseDataResponse deleteUSer(UserName userName)
         {
-            JSONBaseDataResponse  response= SecurePassClient.client.PostRequestWithParameter<UserNameResponse>( usersDeleteAPIURL, userName);
+            JSONBaseDataResponse  
+                response= (JSONBaseDataResponse)SecurePassRestAPI.client.PostRequestWithParameter<UserNameResponse>( usersDeleteAPIURL, userName);
             return response;
         }
 
         public JSONBaseDataResponse enableUSer(UserName userName)
         {
-            JSONBaseDataResponse response = SecurePassClient.client.PostRequestWithParameter<UserNameResponse>( usersEnableAPIURL, userName);
+            JSONBaseDataResponse response = SecurePassRestAPI.client.PostRequestWithParameter<UserNameResponse>( usersEnableAPIURL, userName);
             return response;
         }
 
         public JSONBaseDataResponse disableUSer(UserName userName)
         {
-            JSONBaseDataResponse response = SecurePassClient.client.PostRequestWithParameter<UserNameResponse>( usersDisableAPIURL, userName);
+            JSONBaseDataResponse response = SecurePassRestAPI.client.PostRequestWithParameter<UserNameResponse>( usersDisableAPIURL, userName);
             return response;
         }
 
         public JSONBaseDataResponse UserPasswordDisable(UserName userName)
         {
-            JSONBaseDataResponse response = SecurePassClient.client.PostRequestWithParameter<JSONBaseDataResponse>( usersDisablePasswordAPIURL, userName);
+            JSONBaseDataResponse response = SecurePassRestAPI.client.PostRequestWithParameter<JSONBaseDataResponse>( usersDisablePasswordAPIURL, userName);
             return response;
         }
 
         public JSONBaseDataResponse UserPasswordChange(UserPasswordChange userPasswordChange)
         {
-            JSONBaseDataResponse response = SecurePassClient.client.PostRequestWithParameter<JSONBaseDataResponse>( usersPasswordChangeAPIURL, userPasswordChange);
+            JSONBaseDataResponse response = SecurePassRestAPI.client.PostRequestWithParameter<JSONBaseDataResponse>( usersPasswordChangeAPIURL, userPasswordChange);
             return response;
         }
 
         public UserXattrList UserXattrList(UserName userName)
         {
             //            UserXattrList response = client.PostRequestWithParameter<UserXattrList>(APIVersionPath + usersXattrsListAPIURL, userName);
-            String response = SecurePassClient.client.PostRequestWithParameter( usersXattrsListAPIURL, userName);
+            String response = SecurePassRestAPI.client.PostRequestWithParameter( usersXattrsListAPIURL, userName);
 
 
             Dictionary<string, string> data = getDictionaryFromJson(response);
@@ -122,7 +120,7 @@ namespace ClassLibrary1.Class
         // Attribute Name will be tranformed in every case in lower case
         public JSONBaseDataResponse UserXattrSet(UserNameXattrSet userNameXattrSet)
         {
-            JSONBaseDataResponse response = SecurePassClient.client.PostRequestWithParameter<JSONBaseDataResponse>( usersXattrsSetAPIURL, userNameXattrSet);
+            JSONBaseDataResponse response = SecurePassRestAPI.client.PostRequestWithParameter<JSONBaseDataResponse>( usersXattrsSetAPIURL, userNameXattrSet);
             return response;
         }
 
