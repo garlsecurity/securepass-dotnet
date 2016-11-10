@@ -19,10 +19,6 @@ namespace UnitTests.Tests
         private static string  XattrNameTest = "testattr";
         private static string XattrValueTest = "testAttrValue";
 
-
-        private SecurePassRestClient _securePassRestClient;
-
-
         [ClassInitialize()]
         public static void InitializeTestClass(TestContext context)
         {
