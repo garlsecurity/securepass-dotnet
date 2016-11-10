@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClassLibrary1.Class.PlainObject;
+using SecurePass.DotNet.Class.PlainObject;
 
-namespace ClassLibrary1.Class.APIClass
+namespace SecurePass.DotNet.Class.APIClass
 {
     public class AppsAPI
     {

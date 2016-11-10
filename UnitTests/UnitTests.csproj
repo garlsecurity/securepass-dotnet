@@ -66,13 +66,13 @@
     <Compile Include="Tests\SecurePassTestAuth.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\ClassLibrary.csproj">
-      <Project>{f0000357-9d21-4f91-b32b-2c4188a3f7d6}</Project>
-      <Name>ClassLibrary</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\SecurePassLibrary\ClassLibrary.csproj">
+      <Project>{F0000357-9D21-4F91-B32B-2C4188A3F7D6}</Project>
+      <Name>ClassLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

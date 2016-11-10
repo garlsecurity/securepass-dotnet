@@ -1,7 +1,7 @@
 using System;
-using ClassLibrary1.Class.PlainObject;
+using SecurePass.DotNet.Class.PlainObject;
 
-namespace ClassLibrary1.Class
+namespace SecurePass.DotNet.Class.APIClass
 {
     public class SecurePassRestAPI
     {

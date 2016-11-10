@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ClassLibrary1.Class.APIClass;
-using ClassLibrary1.Class.PlainObject;
+using SecurePass.DotNet.Class.APIClass;
+using SecurePass.DotNet.Class.PlainObject;
 
 namespace UnitTests.Tests
 {
@@ -22,22 +22,22 @@ namespace UnitTests.Tests
         // Apps
         public static String appName = "TestAppLAbel1";
 
-        public static UserData CreateTestUserObject()
+        public static UserDataReq CreateTestUserObject()
         {
-            UserData userData = new UserData();
-            userData.USERNAME = $"testuser@{realmTestName}";
-            userData.NAME = "test";
-            userData.EMAIL = "test@test.com";
-            userData.SURNAME = "TestSurname";
-            userData.MOBILE = "+193356666666";
-            return userData;
+            UserDataReq userDataReq = new UserDataReq();
+            userDataReq.USERNAME = $"testuser@{realmTestName}";
+            userDataReq.NAME = "test";
+            userDataReq.EMAIL = "test@test.com";
+            userDataReq.SURNAME = "TestSurname";
+            userDataReq.MOBILE = "+193356666666";
+            return userDataReq;
         }
 
-        public static UserName GetTestUserName()
+        public static UserNameReq GetTestUserName()
         {
-            UserName userName = new UserName();
-            userName.USERNAME = TestUtility.CreateTestUserObject().USERNAME;
-            return userName;
+            UserNameReq userNameReq = new UserNameReq();
+            userNameReq.USERNAME = TestUtility.CreateTestUserObject().USERNAME;
+            return userNameReq;
         }
 
 

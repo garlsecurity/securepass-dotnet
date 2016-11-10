@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ClassLibrary1;
-using ClassLibrary1.Class;
-using ClassLibrary1.Class.APIClass;
-using ClassLibrary1.Class.PlainObject;
-using UnitTests.Tests;
-using static System.Console;
+using SecurePass.DotNet.Class;
+using SecurePass.DotNet.Class.APIClass;
+using SecurePass.DotNet.Class.PlainObject;
 
-
-namespace UnitTests
+namespace UnitTests.Tests
 {
     [TestClass]
     public class UserAPIClientTest
@@ -18,7 +13,7 @@ namespace UnitTests
 
         private static SecurePassRestAPI _securePassRestApi;
         static UsersAPI _usersApi;
-        static UserData testUserData;
+        static UserDataReq _testUserDataReq;
 
 
         private static string  XattrNameTest = "testattr";
@@ -33,7 +28,7 @@ namespace UnitTests
         {
             _usersApi = new UsersAPI();
             _securePassRestApi = new SecurePassRestAPI(SecurePassTestAuth.SecurePassAppID, SecurePassTestAuth.SecurePassAppSecret, SecurePassTestAuth.SecurePassUsername, SecurePassTestAuth.SecurePassSecret);
-            testUserData = TestUtility.CreateTestUserObject();
+            _testUserDataReq = TestUtility.CreateTestUserObject();
         }
 
         [TestInitialize()]
@@ -51,23 +46,23 @@ namespace UnitTests
 
         private void DeleteTestUserFromRealm()
         {
-            UserName userName = TestUtility.GetTestUserName();
-            var response = _usersApi.deleteUSer(userName);
+            UserNameReq userNameReq = TestUtility.GetTestUserName();
+            var response = _usersApi.deleteUSer(userNameReq);
         }
 
 
         // Utility Method for test
-        private UserNameResponse AddTestUserToRealm()
+        private UserNameResp AddTestUserToRealm()
         {
             var userAdd = TestUtility.CreateTestUserObject();
-            UserNameResponse userName = _usersApi.addUser(userAdd);
+            UserNameResp userName = _usersApi.addUser(userAdd);
             return userName;
         }
 
         // Utility Method for test
-        private UserInfo GetTestUserInfoForTestUser()
+        private UserInfoResp GetTestUserInfoForTestUser()
         {
-            UserName testUsername = new UserName();
+            UserNameReq testUsername = new UserNameReq();
             testUsername.USERNAME = TestUtility.GetTestUserName().USERNAME;
             var result = _usersApi.GetUserInfo(testUsername);
             return result;
@@ -85,7 +80,7 @@ namespace UnitTests
         public void TestGetUserList()
         {
             AddTestUserToRealm();
-            UserList result = _usersApi.GetUserList();
+            UserListResp result = _usersApi.GetUserList();
 
             Assert.IsTrue(result.Username.Count > 0);
             Assert.IsTrue(result.Username.Contains(TestUtility.GetTestUserName().USERNAME));
@@ -110,8 +105,8 @@ namespace UnitTests
             // Prepare Test
             AddTestUserToRealm();
 
-            UserName userName = TestUtility.GetTestUserName();
-            JSONBaseDataResponse response = (JSONBaseDataResponse)_usersApi.deleteUSer(userName);
+            UserNameReq userNameReq = TestUtility.GetTestUserName();
+            JSONBaseDataResponse response = (JSONBaseDataResponse)_usersApi.deleteUSer(userNameReq);
 
             Assert.IsTrue(response.rc == "0");
         }
@@ -122,8 +117,8 @@ namespace UnitTests
             // Prepare Test
             AddTestUserToRealm();
 
-            UserName userName = TestUtility.GetTestUserName();
-            JSONBaseDataResponse response = _usersApi.enableUSer(userName);
+            UserNameReq userNameReq = TestUtility.GetTestUserName();
+            JSONBaseDataResponse response = _usersApi.enableUSer(userNameReq);
 
             Assert.IsTrue(response.rc == "0");
             var testUserInfo = GetTestUserInfoForTestUser();
@@ -137,9 +132,9 @@ namespace UnitTests
             // Prepare Test
             AddTestUserToRealm();
 
-            UserName userName = TestUtility.GetTestUserName();
+            UserNameReq userNameReq = TestUtility.GetTestUserName();
 
-            JSONBaseDataResponse response = _usersApi.disableUSer(userName);
+            JSONBaseDataResponse response = _usersApi.disableUSer(userNameReq);
             Assert.IsTrue(response.rc == "0");
 
             var testUserInfo = GetTestUserInfoForTestUser();
@@ -152,9 +147,9 @@ namespace UnitTests
             // Prepare Test
             AddTestUserToRealm();
 
-            UserName userName = TestUtility.GetTestUserName();
+            UserNameReq userNameReq = TestUtility.GetTestUserName();
 
-            JSONBaseDataResponse response = _usersApi.UserPasswordDisable(userName);
+            JSONBaseDataResponse response = _usersApi.UserPasswordDisable(userNameReq);
             Assert.IsTrue(response.rc == "0");
 
         }
@@ -165,12 +160,12 @@ namespace UnitTests
             // Prepare Test
             AddTestUserToRealm();
 
-            UserName userName = TestUtility.GetTestUserName();
-            UserPasswordChange userPasswordChange = new UserPasswordChange();
-            userPasswordChange.USERNAME = userName.USERNAME;
-            userPasswordChange.PASSWORD = "ERT$%%^$%";
+            UserNameReq userNameReq = TestUtility.GetTestUserName();
+            UserPasswordChangeReq userPasswordChangeReq = new UserPasswordChangeReq();
+            userPasswordChangeReq.USERNAME = userNameReq.USERNAME;
+            userPasswordChangeReq.PASSWORD = "ERT$%%^$%";
 
-            JSONBaseDataResponse response = _usersApi.UserPasswordChange(userPasswordChange);
+            JSONBaseDataResponse response = _usersApi.UserPasswordChange(userPasswordChangeReq);
             Assert.IsTrue(response.rc == "0");
 
         }
@@ -181,12 +176,12 @@ namespace UnitTests
             // Prepare Test
             AddTestUserToRealm();
 
-            UserName userName = TestUtility.GetTestUserName();
-            UserPasswordChange userPasswordChange = new UserPasswordChange();
-            userPasswordChange.USERNAME = userName.USERNAME + "WWW";
-            userPasswordChange.PASSWORD = "ERT$%%^$%";
+            UserNameReq userNameReq = TestUtility.GetTestUserName();
+            UserPasswordChangeReq userPasswordChangeReq = new UserPasswordChangeReq();
+            userPasswordChangeReq.USERNAME = userNameReq.USERNAME + "WWW";
+            userPasswordChangeReq.PASSWORD = "ERT$%%^$%";
 
-            JSONBaseDataResponse response = _usersApi.UserPasswordChange(userPasswordChange);
+            JSONBaseDataResponse response = _usersApi.UserPasswordChange(userPasswordChangeReq);
             Assert.IsTrue(response.rc != "0");
 
         }
@@ -197,7 +192,7 @@ namespace UnitTests
             // Prepare Test
             AddTestUserToRealm();
 
-            UserName userName = TestUtility.GetTestUserName();
+            UserNameReq userNameReq = TestUtility.GetTestUserName();
 
             var userNameXattrSet = getXAttrTestSet();
 
@@ -205,7 +200,7 @@ namespace UnitTests
             Assert.IsTrue(responseXattrSet.rc == "0");
 
 
-            UserXattrList response = _usersApi.UserXattrList(userName);
+            UserXattrListResp response = _usersApi.UserXattrList(userNameReq);
             //Assert.IsTrue(response.rc == "0");
 
         }
@@ -223,20 +218,20 @@ namespace UnitTests
             JSONBaseDataResponse response = _usersApi.UserXattrSet(userNameXattrSet);
             Assert.IsTrue(response.rc == "0");
 
-            UserName userName = TestUtility.GetTestUserName();
-            UserXattrList userXattrList = _usersApi.UserXattrList(userName);
-            Assert.IsTrue(userXattrList.rc == "0");
-            Assert.IsTrue(userXattrList.values[XattrNameTest] == XattrValueTest);
+            UserNameReq userNameReq = TestUtility.GetTestUserName();
+            UserXattrListResp userXattrListResp = _usersApi.UserXattrList(userNameReq);
+            Assert.IsTrue(userXattrListResp.rc == "0");
+            Assert.IsTrue(userXattrListResp.values[XattrNameTest] == XattrValueTest);
 
         }
 
-        private static UserNameXattrSet getXAttrTestSet()
+        private static UserNameXattrSetReq getXAttrTestSet()
         {
-            UserNameXattrSet userNameXattrSet = new UserNameXattrSet();
-            userNameXattrSet.USERNAME = TestUtility.GetTestUserName().USERNAME;
-            userNameXattrSet.ATTRIBUTE = XattrNameTest;
-            userNameXattrSet.VALUE = XattrValueTest;
-            return userNameXattrSet;
+            UserNameXattrSetReq userNameXattrSetReq = new UserNameXattrSetReq();
+            userNameXattrSetReq.USERNAME = TestUtility.GetTestUserName().USERNAME;
+            userNameXattrSetReq.ATTRIBUTE = XattrNameTest;
+            userNameXattrSetReq.VALUE = XattrValueTest;
+            return userNameXattrSetReq;
         }
     }
 }

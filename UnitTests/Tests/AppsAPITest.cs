@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using ClassLibrary1.Class;
-using ClassLibrary1.Class.APIClass;
-using ClassLibrary1.Class.PlainObject;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SecurePass.DotNet.Class.APIClass;
+using SecurePass.DotNet.Class.PlainObject;
 
 namespace UnitTests.Tests
 {

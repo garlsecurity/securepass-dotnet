@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp;
 
-namespace ClassLibrary1.Class.PlainObject
+namespace SecurePass.DotNet.Class.PlainObject
 {
     class User
     {
     }
 
 
-    public class UserName : JSONBaseDataRequest
+    public class UserNameReq : JSONBaseDataRequest
     {
         public String USERNAME { get; set; }
     }
 
-    public class UserData : JSONBaseDataRequest
+    public class UserDataReq : JSONBaseDataRequest
     {
         public String USERNAME { get; set; }
         public string NAME { get; set; }
@@ -28,20 +24,20 @@ namespace ClassLibrary1.Class.PlainObject
     }
 
 
-    public class UserNameXattrSet : JSONBaseDataRequest
+    public class UserNameXattrSetReq : JSONBaseDataRequest
     {
        public string USERNAME { get; set; }
         public string ATTRIBUTE { get; set; }
         public string VALUE { get; set; }
     }
-    public class UserPasswordChange : JSONBaseDataRequest
+    public class UserPasswordChangeReq : JSONBaseDataRequest
     {
         public String USERNAME { get; set; }
         public String PASSWORD { get; set; }
     }
 
 
-    public class UserList : JSONBaseDataResponse
+    public class UserListResp : JSONBaseDataResponse
     {
         private List<String> username;
 
@@ -52,37 +48,28 @@ namespace ClassLibrary1.Class.PlainObject
         }
     }
 
-    public class UserXattrList : JSONBaseDataResponse
+    public class UserXattrListResp : JSONBaseDataResponse
     {
         public Dictionary<String, String> values = new Dictionary<string, string>();
     }
 
 
-    public class UserNameResponse : JSONBaseDataResponse
+    public class UserNameResp : JSONBaseDataResponse
     {
         public String userName { get; set; }
     }
 
-    public class UserInfo : JSONBaseDataResponse
+    public class UserInfoResp : JSONBaseDataResponse
     {
         public string Nin { get; set; }
-
         public string Name { get; set; }
-
         public string Mobile { get; set; }
-
         public string ErrorMsg { get; set; }
-
         public bool Enabled { get; set; }
-
         public string Token { get; set; }
-
         public string Manager { get; set; }
-
         public string Surname { get; set; }
-
         public string Password { get; set; }
-
         public string Email { get; set; }
     }
 }

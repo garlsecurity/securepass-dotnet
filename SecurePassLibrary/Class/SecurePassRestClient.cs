@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using ClassLibrary1.Class;
-using ClassLibrary1.Class.PlainObject;
 using RestSharp;
+using SecurePass.DotNet.Class.APIClass;
+using SecurePass.DotNet.Class.PlainObject;
 
-namespace ClassLibrary1
+namespace SecurePass.DotNet.Class
 {
     public class SecurePassRestClient
     {
@@ -105,10 +102,10 @@ namespace ClassLibrary1
             var request = new RestRequest(APIurl, Method.POST);
             //  HTTP Headers
             request.AddHeader(XSecurePassAppIDHeader, vXSecurePassAppIdHeader);
-            request.AddHeader("X-SecurePass-App-Secret", vXSecurePassAppSecretHeader);
+            request.AddHeader(XSecurePassAppSecretHeader, vXSecurePassAppSecretHeader);
 
-            request.AddParameter("USERNAME", vUSERNAMEParameter);
-            request.AddParameter("SECRET", vSECRETParameter);
+            request.AddParameter(USERNAMEParameter, vUSERNAMEParameter);
+            request.AddParameter(SECRETParameter, vSECRETParameter);
             if (debug) DumpMandatoryHeader()
             ;
             return request;

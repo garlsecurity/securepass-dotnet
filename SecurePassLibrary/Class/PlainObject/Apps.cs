@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace ClassLibrary1.Class.PlainObject
+﻿namespace SecurePass.DotNet.Class.PlainObject
 {
     class Apps
     {
@@ -47,8 +40,5 @@ namespace ClassLibrary1.Class.PlainObject
         public string GROUP { get; set; }
         public string REALM { get; set; }
     }
-
-
-
 
 }

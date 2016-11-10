@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClassLibrary1.Class.PlainObject;
+using SecurePass.DotNet.Class.PlainObject;
 
-namespace ClassLibrary1.Class.APIClass
+namespace SecurePass.DotNet.Class.APIClass
 {
     public class RadiusAPI
     {
@@ -15,7 +11,6 @@ namespace ClassLibrary1.Class.APIClass
         public String RadiusDeleteAPIURL = "radius/delete";
         public String RadiusModifyAPIURL = "radius/modify";
 
-        private readonly SecurePassRestAPI _securePassRestApi;
 
         public RadiusAddResp radiusAdd(RadiusAddReq radiusAddReq)
         {
