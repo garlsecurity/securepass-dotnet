@@ -5,7 +5,7 @@ namespace SecurePass.DotNet.Class.APIClass
 {
     public class RadiusAPI
     {
-        public String RadiusAddAPIURL = "/radius/add";
+        public String RadiusAddAPIURL = "radius/add";
         public String RadiusListAPIURL = "radius/list";
         public String RadiusInfoAPIURL = "radius/info";
         public String RadiusDeleteAPIURL = "radius/delete";

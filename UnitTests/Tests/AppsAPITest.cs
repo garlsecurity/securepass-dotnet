@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SecurePass.DotNet.Class.APIClass;
 using SecurePass.DotNet.Class.PlainObject;
 
@@ -10,7 +11,7 @@ namespace UnitTests.Tests
     /// <summary>
     /// Summary description for AppsAPITest
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class AppsAPITest
     {
         public AppsAPITest()
@@ -22,27 +23,27 @@ namespace UnitTests.Tests
 
         private TestContext testContextInstance;
 
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
+//        /// <summary>
+//        ///Gets or sets the test context which provides
+//        ///information about and functionality for the current test run.
+//        ///</summary>
+//        public TestContext TestContext
+//        {
+//            get
+//            {
+//                return testContextInstance;
+//            }
+//            set
+//            {
+//                testContextInstance = value;
+//            }
+//        }
 
         private static AppsAPI _appsApi;
         private static SecurePassRestAPI _securePassRestApi;
 
-        [ClassInitialize()]
-        public static void InitializeTestClass(TestContext context)
+        [OneTimeSetUp]
+        public void InitializeTestClass()
         {
             _appsApi = new AppsAPI();
             _securePassRestApi = new SecurePassRestAPI(SecurePassTestAuth.SecurePassAppID,
@@ -73,7 +74,7 @@ namespace UnitTests.Tests
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void TestAppsDelete()
         {
             var request = TestUtility.AppsAddReq();
@@ -89,7 +90,7 @@ namespace UnitTests.Tests
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestAppsAdd()
         {
             var request = TestUtility.AppsAddReq();
@@ -97,7 +98,7 @@ namespace UnitTests.Tests
             Assert.IsTrue(appsAddDataResp.rc == "0");
         }
 
-        [TestMethod]
+        [Test]
         public void TestAppsInfo()
         {
             var request = TestUtility.AppsAddReq();

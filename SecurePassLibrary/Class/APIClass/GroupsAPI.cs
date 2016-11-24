@@ -5,17 +5,24 @@ namespace SecurePass.DotNet.Class.APIClass
 {
     public class GroupsAPI
     {
-        public String groupsMemberAPIURL = "/api/v1/groups/member";
+        public String groupsListAPIURL = "groups/list";
+        public String groupsAddPIURL = "groups/add";
 
-        public GroupsMemberResp UserIsMEmeberOf(GroupsMemberReq groupsMemberReq)
+        public GroupListResp groupsList(GroupsListReq groupsListReq)
         {
-            GroupsMemberResp groupsMemberResp= 
+            GroupListResp groupsMemberResp=
                 SecurePassRestAPI.client.
-                PostRequestWithParameter<GroupsMemberResp>(groupsMemberAPIURL, groupsMemberReq);
+                PostRequestWithParameter<GroupListResp>(groupsListAPIURL, groupsListReq);
 
             return groupsMemberResp;
         }
 
+        public GruoupAddResp groupsAdd(GroupAddReq groupAddReq)
+        {
+            GruoupAddResp gruoupAddResp = SecurePassRestAPI.client.
+                PostRequestWithParameter<GruoupAddResp>(groupsAddPIURL, groupAddReq);
+            return gruoupAddResp;
+        }
 
     }
 }

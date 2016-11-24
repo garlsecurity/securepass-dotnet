@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SecurePass.DotNet.Class.APIClass;
 using SecurePass.DotNet.Class.PlainObject;
 
 namespace UnitTests.Tests
 {
-    /// <summary>
-    /// Summary description for RadiusAPITest
-    /// </summary>
-    [TestClass]
+    [TestFixture]
     public class RadiusAPITest
     {
         public RadiusAPITest()
@@ -25,8 +23,8 @@ namespace UnitTests.Tests
         private static RadiusAPI _radiusApi;
         private static SecurePassRestAPI _securePassRestApi;
 
-        [ClassInitialize()]
-        public static void InitializeTestClass(TestContext context)
+        [OneTimeSetUp]
+        public  void InitializeTestClass()
         {
             _radiusApi = new RadiusAPI();
             _securePassRestApi = new SecurePassRestAPI(SecurePassTestAuth.SecurePassAppID,
@@ -55,7 +53,7 @@ namespace UnitTests.Tests
         // public static void MyClassCleanup() { }
         //
         // Use TestInitialize to run code before running each test 
-        [TestInitialize()]
+        [SetUp]
         public void MyTestInitialize()
         {
             TestUtility.DeleteTestRadius(_radiusApi , TestUtility.radiusFQDN1);
@@ -63,7 +61,7 @@ namespace UnitTests.Tests
         }
         //
         // Use TestCleanup to run code after each test has run
-        [TestCleanup()]
+        [TearDown]
         public void MyTestCleanup()
         {
             TestUtility.DeleteTestRadius(_radiusApi, TestUtility.RADIUS_IP_TEST1);
@@ -73,7 +71,7 @@ namespace UnitTests.Tests
 
         #endregion
 
-        [TestMethod]
+        [Test]
         public void TestRadiusAdd()
         {
             var radiusAddResp = TestUtility.CreateTestRadius1(_radiusApi);
@@ -82,7 +80,7 @@ namespace UnitTests.Tests
         }
 
 
-        [TestMethod]
+        [Test]
         public void testRadiusList()
         {
             var radiusAddResp = TestUtility.CreateTestRadius1(_radiusApi);
@@ -96,7 +94,7 @@ namespace UnitTests.Tests
             Assert.IsTrue(radiusListResp.radius.Count == 2);
         }
 
-        [TestMethod]
+        [Test]
         public void testRadiusInfo()
         {
             var radiusAddResp = TestUtility.CreateTestRadius1(_radiusApi);
@@ -109,7 +107,7 @@ namespace UnitTests.Tests
 
         }
 
-        [TestMethod]
+        [Test]
         public void testRadiusDelete()
         {
             // Prepare Test Radius
@@ -122,7 +120,7 @@ namespace UnitTests.Tests
         }
 
 
-        [TestMethod]
+        [Test]
         public void testDoubleDeleteSameRadius()
         {
 
@@ -138,7 +136,7 @@ namespace UnitTests.Tests
 
         }
 
-        [TestMethod]
+        [Test]
         public void testRadiusMOdify()
         {
             // Prepare Test Radius

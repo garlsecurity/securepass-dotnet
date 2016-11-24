@@ -21,6 +21,8 @@ namespace UnitTests.Tests
 
         // Apps
         public static String appName = "TestAppLAbel1";
+        public static string GroupTestName=  "GroupTestName";
+        public static string GroupTestDescription = "GroupTestDescription";
 
         public static UserDataReq CreateTestUserObject()
         {

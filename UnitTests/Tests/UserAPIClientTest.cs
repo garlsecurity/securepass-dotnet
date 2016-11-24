@@ -1,12 +1,13 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SecurePass.DotNet.Class;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
+//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecurePass.DotNet.Class.APIClass;
 using SecurePass.DotNet.Class.PlainObject;
 
 namespace UnitTests.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class UserAPIClientTest
     {
         private String wrongUserName = "DFEREER#$cklfdadsfklsdfjlskdjflsdkjflsdfkj";
@@ -19,21 +20,21 @@ namespace UnitTests.Tests
         private static string  XattrNameTest = "testattr";
         private static string XattrValueTest = "testAttrValue";
 
-        [ClassInitialize()]
-        public static void InitializeTestClass(TestContext context)
+        [OneTimeSetUp]
+        public  void InitializeTestClass()
         {
             _usersApi = new UsersAPI();
             _securePassRestApi = new SecurePassRestAPI(SecurePassTestAuth.SecurePassAppID, SecurePassTestAuth.SecurePassAppSecret, SecurePassTestAuth.SecurePassUsername, SecurePassTestAuth.SecurePassSecret);
             _testUserDataReq = TestUtility.CreateTestUserObject();
         }
 
-        [TestInitialize()]
+        [SetUp]
         public void InitializeForEveryTest()
         {
             DeleteTestUserFromRealm();
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupForEveryTest()
         {
             DeleteTestUserFromRealm();
@@ -64,7 +65,7 @@ namespace UnitTests.Tests
             return result;
         }
 
-        [TestMethod]
+        [Test]
         public void TestConstructor()
         {
             // TO DO  DO THIS !!
@@ -72,7 +73,7 @@ namespace UnitTests.Tests
 
 
 
-        [TestMethod]
+        [Test]
         public void TestGetUserList()
         {
             AddTestUserToRealm();
@@ -85,7 +86,7 @@ namespace UnitTests.Tests
         }
 
 
-        [TestMethod]
+        [Test]
         public void TestAddUser()
         {
             var userName = AddTestUserToRealm();
@@ -95,7 +96,7 @@ namespace UnitTests.Tests
 
 
 
-        [TestMethod]
+        [Test]
         public void TestDeleteUser()
         {
             // Prepare Test
@@ -107,7 +108,7 @@ namespace UnitTests.Tests
             Assert.IsTrue(response.rc == "0");
         }
 
-        [TestMethod]
+        [Test]
         public void TestEnableUser()
         {
             // Prepare Test
@@ -122,7 +123,7 @@ namespace UnitTests.Tests
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestDisableUser()
         {
             // Prepare Test
@@ -137,7 +138,7 @@ namespace UnitTests.Tests
             Assert.IsTrue(testUserInfo.Enabled == false);
         }
 
-        [TestMethod]
+        [Test]
         public void TestDisableUserPassowrd()
         {
             // Prepare Test
@@ -150,7 +151,7 @@ namespace UnitTests.Tests
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestDisableUserPassowrdChange()
         {
             // Prepare Test
@@ -166,7 +167,7 @@ namespace UnitTests.Tests
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestDisableUserPassowrdChangeWithBADUSER()
         {
             // Prepare Test
@@ -182,7 +183,7 @@ namespace UnitTests.Tests
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestgetUserXattrList()
         {
             // Prepare Test
@@ -203,7 +204,7 @@ namespace UnitTests.Tests
 
 
 
-        [TestMethod]
+        [Test]
         public void TestgetUserXattrSet()
         {
             // Prepare Test

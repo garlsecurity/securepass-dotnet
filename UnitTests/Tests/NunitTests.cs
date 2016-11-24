@@ -1,4 +1,14 @@
-﻿$HEADER$namespace $NAMESPACE$
+﻿namespace UnitTests.Tests
 {
-  public class $CLASS$ {$END$}
+
+    using NUnit.Framework;
+
+    public class NunitTests
+    {
+        [Test]
+        public void TransferFunds()
+        {
+            Assert.True(true);
+        }
+    }
 }
