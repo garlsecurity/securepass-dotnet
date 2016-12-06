@@ -7,10 +7,16 @@ namespace SecurePass.DotNet.Class.PlainObject
     {
     }
 
-    public class GroupID
+    public class GroupIDReq : JSONBaseDataRequest
     {
-        public String GROUP { get; set; }
+        public string GROUP { get; set; }
     }
+
+    public class GroupIDResp : JSONBaseDataResponse
+    {
+        public string GROUP { get; set; }
+    }
+
 
 //    public class GroupsMemberReq : JSONBaseDataRequest
 //    {
@@ -36,15 +42,58 @@ namespace SecurePass.DotNet.Class.PlainObject
     }
 
     //URL 'groups/add'
-    public class GroupAddReq : JSONBaseDataRequest
+    public class GroupAddReq : GroupIDReq
     {
-        public String GROUP { get; set; }
         public String DESCRIPTION { get; set; }
     }
 
     public class GruoupAddResp : JSONBaseDataResponse
     {
-        public string GROUP { get; set; }
+        public GroupIDReq GROUP;
+    }
+
+    //URL 'groups/delete'
+    public class GroupDeleteReq : GroupIDReq
+    {
+    }
+
+    public class GroupDeleteResp : JSONBaseDataResponse
+    {
+
+    }
+
+    // ## MEMBERS OF GROUP OPERATION
+    public class JSONUserNameAndGroup : GroupIDReq
+    {
+        public String USERNAME { get; set; }
+    }
+
+
+    // URL 'groups/members/check'
+    public class GroupsMemberReq : JSONUserNameAndGroup
+    {
+    }
+
+    public class GroupsMemberCheckResp : JSONBaseDataResponse
+    {
+        public bool member{ get; set; }
+    }
+
+    // URL 'groups/members/add'
+    public class GroupsMemberAddResp : JSONBaseDataResponse
+    {
+    }
+
+    //URL 'groups/members/delete'
+    public class GroupsMembersDeleteResp : JSONBaseDataResponse
+    {
+    }
+
+    // URL 'groups/members/list'
+    public class GroupsMembersListResponse : JSONBaseDataResponse
+    {
+        public List<String> members { get; set; }
+
     }
 
 }

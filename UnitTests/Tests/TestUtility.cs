@@ -21,7 +21,7 @@ namespace UnitTests.Tests
 
         // Apps
         public static String appName = "TestAppLAbel1";
-        public static string GroupTestName=  "GroupTestName";
+        public static string GroupTestName=  $"grouptestname@{realmTestName}";
         public static string GroupTestDescription = "GroupTestDescription";
 
         public static UserDataReq CreateTestUserObject()
@@ -35,7 +35,7 @@ namespace UnitTests.Tests
             return userDataReq;
         }
 
-        public static UserNameReq GetTestUserName()
+        public static UserNameReq GetTestUserNameReq()
         {
             UserNameReq userNameReq = new UserNameReq();
             userNameReq.USERNAME = TestUtility.CreateTestUserObject().USERNAME;
