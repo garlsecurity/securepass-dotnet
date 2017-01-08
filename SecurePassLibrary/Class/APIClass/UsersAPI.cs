@@ -75,43 +75,17 @@ namespace SecurePass.DotNet.Class.APIClass
             return response;
         }
 
-        public UserXattrListResp UserXattrList(UserNameReq userNameReq)
+        public XattrListResp UserXattrList(UserNameReq userNameReq)
         {
-            //            UserXattrListResp response = client.PostRequestWithParameter<UserXattrListResp>(APIVersionPath + usersXattrsListAPIURL, UserNameReq);
+            //            XattrListResp response = client.PostRequestWithParameter<XattrListResp>(APIVersionPath + usersXattrsListAPIURL, UserNameReq);
             String response = SecurePassRestAPI.client.PostRequestWithParameter( usersXattrsListAPIURL, userNameReq);
 
-
-            Dictionary<string, string> data = getDictionaryFromJson(response);
-
-            var userXattrList = GetXattrsValue(data);
+            var userXattrList = XAttrs.GetXattrsValue(response);
 
             return userXattrList;
         }
 
-        private static UserXattrListResp GetXattrsValue(Dictionary<string, string> data)
-        {
-            UserXattrListResp responseUserXattrListResp = new UserXattrListResp();
-            foreach (string item in data.Keys)
-            {
-                var value = data[item];
-                if (item.Equals("rc"))
-                {
-                    responseUserXattrListResp.rc = value;
-                    continue;
-                }
-                if (item.Equals("errorMsg"))
-                {
-                    responseUserXattrListResp.errorMsg = value;
-                    continue;
-                }
 
-                if (!item.Equals("zz"))
-                {
-                    responseUserXattrListResp.values.Add(item, value);
-                }
-            }
-            return responseUserXattrListResp;
-        }
 
         // Attribute Name will be tranformed in every case in lower case
         public JSONBaseDataResponse UserXattrSet(UserNameXattrSetReq userNameXattrSetReq)
@@ -120,14 +94,6 @@ namespace SecurePass.DotNet.Class.APIClass
             return response;
         }
 
-        private Dictionary<string, string > getDictionaryFromJson (String json)
-        {
-            Console.Out.WriteLine("json = {0}", json);
-
-            Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-
-            return values;
-        }
 
     }
 }

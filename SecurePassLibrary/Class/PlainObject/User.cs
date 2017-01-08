@@ -48,11 +48,6 @@ namespace SecurePass.DotNet.Class.PlainObject
         }
     }
 
-    public class UserXattrListResp : JSONBaseDataResponse
-    {
-        public Dictionary<String, String> values = new Dictionary<string, string>();
-    }
-
 
     public class UserNameResp : JSONBaseDataResponse
     {

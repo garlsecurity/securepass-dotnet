@@ -24,6 +24,11 @@ namespace UnitTests.Tests
         public static string GroupTestName=  $"grouptestname@{realmTestName}";
         public static string GroupTestDescription = "GroupTestDescription";
 
+        // XAttrs
+        public static string  XattrNameTest = "testattr";
+        public static string XattrValueTest = "testAttrValue";
+
+
         public static UserDataReq CreateTestUserObject()
         {
             UserDataReq userDataReq = new UserDataReq();

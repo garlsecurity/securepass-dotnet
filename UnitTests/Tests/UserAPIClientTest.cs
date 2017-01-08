@@ -17,8 +17,6 @@ namespace UnitTests.Tests
         static UserDataReq _testUserDataReq;
 
 
-        private static string  XattrNameTest = "testattr";
-        private static string XattrValueTest = "testAttrValue";
 
         [OneTimeSetUp]
         public  void InitializeTestClass()
@@ -191,18 +189,16 @@ namespace UnitTests.Tests
 
             UserNameReq userNameReq = TestUtility.GetTestUserNameReq();
 
-            var userNameXattrSet = getXAttrTestSet();
+            var userNameXattrSet = getXAttrUserTestSet();
 
             JSONBaseDataResponse responseXattrSet= _usersApi.UserXattrSet(userNameXattrSet);
             Assert.IsTrue(responseXattrSet.rc == "0");
 
 
-            UserXattrListResp response = _usersApi.UserXattrList(userNameReq);
+            XattrListResp response = _usersApi.UserXattrList(userNameReq);
             //Assert.IsTrue(response.rc == "0");
 
         }
-
-
 
         [Test]
         public void TestgetUserXattrSet()
@@ -210,25 +206,27 @@ namespace UnitTests.Tests
             // Prepare Test
             AddTestUserToRealm();
 
-            var userNameXattrSet = getXAttrTestSet();
+            var userNameXattrSet = getXAttrUserTestSet();
 
             JSONBaseDataResponse response = _usersApi.UserXattrSet(userNameXattrSet);
             Assert.IsTrue(response.rc == "0");
 
             UserNameReq userNameReq = TestUtility.GetTestUserNameReq();
-            UserXattrListResp userXattrListResp = _usersApi.UserXattrList(userNameReq);
-            Assert.IsTrue(userXattrListResp.rc == "0");
-            Assert.IsTrue(userXattrListResp.values[XattrNameTest] == XattrValueTest);
+            XattrListResp xattrListResp = _usersApi.UserXattrList(userNameReq);
+            Assert.IsTrue(xattrListResp.rc == "0");
+            Assert.IsTrue(xattrListResp.values[TestUtility.XattrNameTest] == TestUtility.XattrValueTest);
 
         }
 
-        private static UserNameXattrSetReq getXAttrTestSet()
+        private static UserNameXattrSetReq getXAttrUserTestSet()
         {
             UserNameXattrSetReq userNameXattrSetReq = new UserNameXattrSetReq();
             userNameXattrSetReq.USERNAME = TestUtility.GetTestUserNameReq().USERNAME;
-            userNameXattrSetReq.ATTRIBUTE = XattrNameTest;
-            userNameXattrSetReq.VALUE = XattrValueTest;
+            userNameXattrSetReq.ATTRIBUTE = TestUtility.XattrNameTest;
+            userNameXattrSetReq.VALUE = TestUtility.XattrValueTest;
             return userNameXattrSetReq;
         }
+
+
     }
 }

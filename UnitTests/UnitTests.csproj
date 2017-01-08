@@ -60,7 +60,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Tests\NunitTests.cs" />
     <Compile Include="Tests\RadiusAPITest.cs" />
     <Compile Include="Tests\TestUtility.cs" />
     <Compile Include="Tests\GroupsAPITest.cs" />
@@ -77,6 +76,9 @@
       <Project>{F0000357-9D21-4F91-B32B-2C4188A3F7D6}</Project>
       <Name>ClassLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

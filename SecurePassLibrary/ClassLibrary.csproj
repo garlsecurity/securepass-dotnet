@@ -65,11 +65,15 @@
     <Compile Include="Class\PlainObject\Groups.cs" />
     <Compile Include="Class\PlainObject\Radius.cs" />
     <Compile Include="Class\PlainObject\User.cs" />
+    <Compile Include="Class\PlainObject\XAttrs.cs" />
     <Compile Include="Class\SecurePassRestClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Class\APIClass" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

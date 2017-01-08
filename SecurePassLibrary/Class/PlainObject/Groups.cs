@@ -52,10 +52,6 @@ namespace SecurePass.DotNet.Class.PlainObject
         public GroupIDReq GROUP;
     }
 
-    //URL 'groups/delete'
-    public class GroupDeleteReq : GroupIDReq
-    {
-    }
 
     public class GroupDeleteResp : JSONBaseDataResponse
     {
@@ -95,5 +91,27 @@ namespace SecurePass.DotNet.Class.PlainObject
         public List<String> members { get; set; }
 
     }
+
+    // URL 'groups/xattrs/set'
+    public class GroupsXattrsSet : GroupIDReq
+    {
+        public string ATTRIBUTE { get; set; }
+        public string VALUE { get; set; }
+    }
+
+    // URL 'groups/xattrs/get'
+    public class GroupsXattrsGet : GroupIDReq
+    {
+        public string ATTRIBUTE { get; set; }
+    }
+
+    public class GroupXattrDelete : GroupsXattrsGet
+    {
+
+    }
+
+
+
+
 
 }
