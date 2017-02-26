@@ -5,11 +5,11 @@ namespace SecurePass.DotNet.Class.APIClass
 {
     public class GroupsAPI
     {
-        public String groupsListAPIURL = "groups/list";
-        public String groupsAddPIURL = "groups/add";
-        public String groupsDeleteURL = "groups/delete";
+        public static String groupsListAPIURL = "groups/list";
+        public static String groupsAddPIURL = "groups/add";
+        public static String groupsDeleteURL = "groups/delete";
 
-        public GroupListResp GroupsList(GroupsListReq groupsListReq)
+        public static GroupListResp GroupsList(GroupsListReq groupsListReq)
         {
             GroupListResp groupsMemberResp=
                 SecurePassRestAPI.client.
@@ -18,14 +18,14 @@ namespace SecurePass.DotNet.Class.APIClass
             return groupsMemberResp;
         }
 
-        public GruoupAddResp GroupsAdd(GroupAddReq groupAddReq)
+        public static GruoupAddResp GroupsAdd(GroupAddReq groupAddReq)
         {
             GruoupAddResp gruoupAddResp = SecurePassRestAPI.client.
                 PostRequestWithParameter<GruoupAddResp>(groupsAddPIURL, groupAddReq);
             return gruoupAddResp;
         }
 
-        public GroupDeleteResp GroupsDelete(GroupIDReq req)
+        public static GroupDeleteResp GroupsDelete(GroupIDReq req)
         {
             IJSONBaseDataResponse resp = SecurePassRestAPI.client.
                 PostRequestWithParameter<GroupDeleteResp>(groupsDeleteURL, req);
@@ -34,12 +34,12 @@ namespace SecurePass.DotNet.Class.APIClass
 
 
         // ## USER MEMBER GROUP OPERATION
-        public string groupsMemberAddURL = "groups/members/add";
-        public string groupsMemberCheckURL = "groups/members/check";
-        public string groupsMemberDeleteURL = "groups/members/delete";
-        public string groupsMemberLisURL = "groups/members/list";
+        public static string groupsMemberAddURL = "groups/members/add";
+        public static string groupsMemberCheckURL = "groups/members/check";
+        public static string groupsMemberDeleteURL = "groups/members/delete";
+        public static string groupsMemberLisURL = "groups/members/list";
 
-        public GroupsMemberCheckResp GroupsMemberCheck(GroupsMemberReq req)
+        public static GroupsMemberCheckResp GroupsMemberCheck(GroupsMemberReq req)
         {
             IJSONBaseDataResponse resp = SecurePassRestAPI.client.
                 PostRequestWithParameter<GroupsMemberCheckResp>(groupsMemberCheckURL, req);
@@ -47,21 +47,21 @@ namespace SecurePass.DotNet.Class.APIClass
         }
 
 
-        public GroupsMemberAddResp GroupsMemberAdd(GroupsMemberReq req)
+        public static GroupsMemberAddResp GroupsMemberAdd(GroupsMemberReq req)
         {
             IJSONBaseDataResponse resp = SecurePassRestAPI.client.
                 PostRequestWithParameter<GroupsMemberAddResp>(groupsMemberAddURL, req);
             return (GroupsMemberAddResp) resp;
         }
 
-        public GroupsMembersDeleteResp GroupsMemberDelete(GroupsMemberReq req)
+        public static GroupsMembersDeleteResp GroupsMemberDelete(GroupsMemberReq req)
         {
             IJSONBaseDataResponse resp = SecurePassRestAPI.client.
                 PostRequestWithParameter<GroupsMembersDeleteResp>(groupsMemberDeleteURL, req);
             return (GroupsMembersDeleteResp) resp;
         }
 
-        public GroupsMembersListResponse GroupsMembersList(GroupIDReq req)
+        public static GroupsMembersListResponse GroupsMembersList(GroupIDReq req)
         {
             IJSONBaseDataResponse resp = SecurePassRestAPI.client.
                 PostRequestWithParameter<GroupsMembersListResponse>(groupsMemberLisURL, req);
@@ -85,7 +85,7 @@ namespace SecurePass.DotNet.Class.APIClass
 //        attributes/value pair in json
 //            rc and errorMsg are reserved words!
 //
-        public string groupXattrsList = "groups/xattrs/list";
+        public static string groupXattrsList = "groups/xattrs/list";
         public XattrListResp GroupsXattrsList(GroupIDReq req)
         {
             IJSONBaseDataResponse resp = SecurePassRestAPI.client.
@@ -107,7 +107,7 @@ namespace SecurePass.DotNet.Class.APIClass
 //        none
 //
 //        """
-        public string groupXattrsDelete = "groups/xattrs/delete";
+        public static string groupXattrsDelete = "groups/xattrs/delete";
         public JSONBaseDataResponse DeleteGroupsXattrs(GroupXattrDelete req)
         {
             IJSONBaseDataResponse resp = SecurePassRestAPI.client.
@@ -118,7 +118,7 @@ namespace SecurePass.DotNet.Class.APIClass
 
 
 
-        public string groupXattrsSetURL = "groups/xattrs/set";
+        public static string groupXattrsSetURL = "groups/xattrs/set";
         public JSONBaseDataResponse GroupsXattrsSet(GroupsXattrsSet req)
         {
             IJSONBaseDataResponse resp = SecurePassRestAPI.client.
@@ -126,8 +126,8 @@ namespace SecurePass.DotNet.Class.APIClass
             return (JSONBaseDataResponse) resp;
         }
 
-        public string groupXattrGetURL = "groups/xattrs/get";
-        public XattrListResp GroupsXattrsGet(GroupsXattrsGet req)
+        public static string groupXattrGetURL = "groups/xattrs/get";
+        public static XattrListResp GroupsXattrsGet(GroupsXattrsGet req)
         {
             String response = SecurePassRestAPI.client.PostRequestWithParameter( groupXattrGetURL, req);
 

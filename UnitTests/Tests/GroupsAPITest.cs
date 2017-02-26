@@ -28,7 +28,7 @@ namespace UnitTests.Tests
 
             GroupsListReq groupsListReq= new GroupsListReq();
             groupsListReq.REALM = TestUtility.realmTestName;
-            var groupListResp = _groupsApi.GroupsList(groupsListReq);
+            var groupListResp = GroupsAPI.GroupsList(groupsListReq);
             Assert.IsTrue(TestUtility.checkIFResponseIsOK(groupListResp.rc));
             Assert.IsTrue(groupListResp.group.Contains(TestUtility.GroupTestName));
         }
@@ -41,16 +41,6 @@ namespace UnitTests.Tests
 
             var resp = createTestGroup();
             Assert.IsTrue(TestUtility.checkIFResponseIsOK(resp.rc));
-        }
-
-        private static GruoupAddResp createTestGroup()
-        {
-            var groupAddReq = new GroupAddReq();
-            groupAddReq.GROUP = TestUtility.GroupTestName;
-            groupAddReq.DESCRIPTION = TestUtility.GroupTestDescription;
-
-            var resp = _groupsApi.GroupsAdd(groupAddReq);
-            return resp;
         }
 
         [Test]
@@ -73,26 +63,26 @@ namespace UnitTests.Tests
             groupsMemberReq.USERNAME = TestUtility.GetTestUserNameReq().USERNAME;
 
             // Add user to group
-            var resp = _groupsApi.GroupsMemberAdd(groupsMemberReq);
+            var resp = GroupsAPI.GroupsMemberAdd(groupsMemberReq);
             Assert.IsTrue(TestUtility.checkIFResponseIsOK(resp.rc));
 
             // Check if user is in group
-            GroupsMemberCheckResp groupsMemberCheckResp = _groupsApi.GroupsMemberCheck(groupsMemberReq);
+            GroupsMemberCheckResp groupsMemberCheckResp = GroupsAPI.GroupsMemberCheck(groupsMemberReq);
             Assert.IsTrue(TestUtility.checkIFResponseIsOK(groupsMemberCheckResp.rc));
             Assert.IsTrue(groupsMemberCheckResp.member );
 
             // Test if user is in list
             GroupIDReq req = new GroupIDReq();
             req.GROUP = TestUtility.GroupTestName;
-            var groupsMembersListResponse = _groupsApi.GroupsMembersList(req);
+            var groupsMembersListResponse = GroupsAPI.GroupsMembersList(req);
             Assert.IsTrue(groupsMembersListResponse.members.Contains(TestUtility.GetTestUserNameReq().USERNAME));
 
             //Delete user
-            var groupsMembersDeleteResp = _groupsApi.GroupsMemberDelete(groupsMemberReq);
+            var groupsMembersDeleteResp = GroupsAPI.GroupsMemberDelete(groupsMemberReq);
             Assert.IsTrue(TestUtility.checkIFResponseIsOK(groupsMembersDeleteResp.rc));
 
             // Test if user is deleted
-            groupsMemberCheckResp = _groupsApi.GroupsMemberCheck(groupsMemberReq);
+            groupsMemberCheckResp = GroupsAPI.GroupsMemberCheck(groupsMemberReq);
             Assert.IsTrue(TestUtility.checkIFResponseIsOK(groupsMemberCheckResp.rc));
             Assert.IsFalse(groupsMemberCheckResp.member);
 
@@ -110,7 +100,7 @@ namespace UnitTests.Tests
             groupsXattrsGet.GROUP = TestUtility.GroupTestName;
             groupsXattrsGet.ATTRIBUTE = TestUtility.XattrNameTest;
 
-            var xattrListResp = _groupsApi.GroupsXattrsGet(groupsXattrsGet);
+            var xattrListResp = GroupsAPI.GroupsXattrsGet(groupsXattrsGet);
             Assert.IsTrue(TestUtility.checkIFResponseIsOK(xattrListResp.rc));
             Dictionary<String , String > keyValue = xattrListResp.values;
             String result;
@@ -127,12 +117,11 @@ namespace UnitTests.Tests
             GroupIDReq groupsXattrsListReq = new GroupIDReq();
             groupsXattrsListReq.GROUP = groupTestName;
             var groupsXattrsList = _groupsApi.GroupsXattrsList(groupsXattrsListReq);
-            int a = 1;
             Assert.IsTrue(groupsXattrsList != null);
             // Seems a bug in the API?
             Assert.IsTrue(groupsXattrsList.values.Count == 1);
 
-            xattrListResp = _groupsApi.GroupsXattrsGet(groupsXattrsGet);
+            xattrListResp = GroupsAPI.GroupsXattrsGet(groupsXattrsGet);
             Assert.IsTrue(TestUtility.checkIFResponseIsOK(xattrListResp.rc));
             keyValue = xattrListResp.values;
             if (keyValue.TryGetValue(TestUtility.XattrNameTest, out result)) // Returns true.
@@ -150,11 +139,22 @@ namespace UnitTests.Tests
             var deleteGroupsXattrs = _groupsApi.DeleteGroupsXattrs(groupXattrDelete);
             Assert.IsTrue(TestUtility.checkIFResponseIsOK(deleteGroupsXattrs.rc));
 
-            xattrListResp = _groupsApi.GroupsXattrsGet(groupsXattrsGet);
+            xattrListResp = GroupsAPI.GroupsXattrsGet(groupsXattrsGet);
 
             // Attribute no more present we have an error
             Assert.IsFalse(TestUtility.checkIFResponseIsOK(xattrListResp.rc));
 
+        }
+
+
+        public static GruoupAddResp createTestGroup()
+        {
+            var groupAddReq = new GroupAddReq();
+            groupAddReq.GROUP = TestUtility.GroupTestName;
+            groupAddReq.DESCRIPTION = TestUtility.GroupTestDescription;
+
+            var resp = GroupsAPI.GroupsAdd(groupAddReq);
+            return resp;
         }
 
 
@@ -174,7 +174,7 @@ namespace UnitTests.Tests
             var groupDeleteReq = new GroupIDReq();
             groupDeleteReq.GROUP = TestUtility.GroupTestName;
 
-            var resp = _groupsApi.GroupsDelete(groupDeleteReq);
+            var resp = GroupsAPI.GroupsDelete(groupDeleteReq);
             return resp;
         }
 

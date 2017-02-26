@@ -8,7 +8,7 @@ using SecurePass.DotNet.Class.PlainObject;
 
 namespace UnitTests.Tests
 {
-    class TestUtility
+    public class TestUtility
     {
         public static String realmTestName = "wiran.net";
 
